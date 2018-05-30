@@ -3,12 +3,7 @@
     "version": "0.3.4",
     "description": "React Semantic UI alerts library",
     "main": "build/index.js",
-    "keywords": [
-        "react",
-        "semantic ui",
-        "toast",
-        "alerts"
-    ],
+    "keywords": ["react", "semantic ui", "toast", "alerts"],
     "scripts": {
         "build": "babel lib -d build",
         "build:watch": "babel lib -w -d build",
@@ -18,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/academia-de-codigo/react-semantic-alert.git"
+        "url": "https://github.com/macakraca/react-semantic-toasts.git"
     },
     "author": "<Academia de Código_>",
     "license": "MIT",

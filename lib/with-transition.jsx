@@ -4,32 +4,33 @@ import PropTypes from 'prop-types';
 
 // import 'semantic-ui-css/components/transition.min.css';
 
-const OPEN_TIME = 500;
-const CLOSE_TIME = 1000;
+const DURATION = 0;
+const CLOSE_TIME = 0;
 
 export default function withTransitions(Component) {
     class SemanticTransition extends React.Component {
         static propTypes = {
             toastId: PropTypes.number.isRequired,
-            onClose: PropTypes.func.isRequired,
             animation: PropTypes.string.isRequired,
-            time: PropTypes.number
+            duration: PropTypes.number,
+            closeTime: PropTypes.number
         };
 
         static defaultProps = {
-            time: 2000
+            duration: DURATION,
+            closeTime: CLOSE_TIME
         };
 
         state = {
             visible: false,
-            time: OPEN_TIME,
-            animation: 'pulse'
+            duration: this.props.duration,
+            closeTime: this.props.closeTime
         };
 
         componentDidMount() {
             // schedule auto closing of toast
-            if (this.props.time) {
-                this.timerId = setTimeout(this.onClose, this.props.time);
+            if (this.props.closeTime && this.props.closeTime > 0) {
+                this.timerId = setTimeout(this.onClose, this.props.closeTime);
             }
 
             // start animation as soon as toast is mounted in the dom
@@ -42,30 +43,28 @@ export default function withTransitions(Component) {
                 {
                     visible: !this.state.visible,
                     animation: this.props.animation,
-                    time: CLOSE_TIME
+                    duration: this.state.duration
                 },
                 () => {
                     setTimeout(() => {
                         if (this.timerId) {
                             clearTimeout(this.timerId);
                         }
-
-                        this.props.onClose(this.props.toastId);
-                    }, CLOSE_TIME);
+                    }, this.state.closeTime);
                 }
             );
         };
 
         render() {
-            const { time, visible, animation } = this.state;
+            const { duration, visible, animation } = this.state;
             const styles = {
                 marginBottom: '1em'
             };
 
             return (
-                <Transition animation={animation} duration={time} visible={visible}>
+                <Transition animation={animation} duration={duration} visible={visible}>
                     <div style={styles} role="presentation">
-                        <Component {...this.props} onClose={this.onClose} />
+                        <Component {...this.props} />
                     </div>
                 </Transition>
             );

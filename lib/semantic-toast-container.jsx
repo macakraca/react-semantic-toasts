@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// import 'semantic-ui-css/components/reset.min.css';
-// import 'semantic-ui-css/components/site.min.css';
-// import 'semantic-ui-css/components/container.min.css';
-// import 'semantic-ui-css/components/icon.min.css';
-
 import '../styles/react-semantic-alert.css';
 
 import SemanticToast from './semantic-toast';
@@ -21,6 +16,9 @@ const animations = {
     ['bottom-left']: 'fly right'
 };
 
+const DURATION = 0;
+const CLOSE_TIME = 0;
+
 class SemanticToastContainer extends Component {
     static propTypes = {
         position: PropTypes.oneOf([
@@ -30,11 +28,15 @@ class SemanticToastContainer extends Component {
             'bottom-center',
             'bottom-left'
         ]),
+        duration: PropTypes.number,
+        closeTime: PropTypes.number,
         animation: PropTypes.string
     };
 
     static defaultProps = {
-        position: 'top-right',
+        position: 'bottom-left',
+        duration: DURATION,
+        closeTime: CLOSE_TIME,
         animation: null
     };
 
@@ -50,21 +52,6 @@ class SemanticToastContainer extends Component {
         store.unsubscribe(this.updateToasts);
     }
 
-    onClose = toastId => {
-        const toast = this.state.toasts.find(value => value.id === toastId);
-
-        // toast has been removed already, fixes #1
-        if (!toast) {
-            return;
-        }
-
-        store.remove(toast);
-
-        if (toast.onClose) {
-            toast.onClose();
-        }
-    };
-
     updateToasts = () => {
         this.setState({
             toasts: store.data
@@ -72,7 +59,7 @@ class SemanticToastContainer extends Component {
     };
 
     render() {
-        const { position } = this.props;
+        const { position, duration, closeTime } = this.props;
         const animation = this.props.animation || animations[position];
 
         return (
@@ -80,10 +67,10 @@ class SemanticToastContainer extends Component {
                 {this.state.toasts.map(toast => {
                     const {
                         id,
-                        type = 'info',
+                        type = null,
                         title = '',
                         description = '',
-                        icon = 'announcement',
+                        icon = null,
                         time
                     } = toast;
                     return (
@@ -96,7 +83,8 @@ class SemanticToastContainer extends Component {
                             icon={icon}
                             animation={animation}
                             time={time}
-                            onClose={this.onClose}
+                            duration={duration}
+                            closeTime={closeTime}
                         />
                     );
                 })}

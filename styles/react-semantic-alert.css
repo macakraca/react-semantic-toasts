@@ -1,8 +1,7 @@
 .ui-alerts {
     position: fixed;
-    /* width: 360px; */
     z-index: 2060;
-    padding: 23px;
+    padding: 1rem;
 }
 
 .ui-alerts.center {
@@ -13,24 +12,24 @@
 }
 
 .ui-alerts.top-right {
-    top: 20px;
-    right: 20px;
+    top: 0;
+    right: 0;
 }
 
 .ui-alerts.top-center {
-    top: 20px;
+    top: 0;
     margin-left: -222px;
     left: 50%;
 }
 
 .ui-alerts.top-left {
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
 }
 
 .ui-alerts.bottom-right {
     bottom: 0;
-    right: 20px;
+    right: 0;
 }
 .ui-alerts.bottom-center {
     bottom: 0;
@@ -40,7 +39,7 @@
 
 .ui-alerts.bottom-left {
     bottom: 0;
-    left: 20px;
+    left: 0;
 }
 
 .ui-alerts.ui-alerts > .message > .content > .header {

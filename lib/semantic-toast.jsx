@@ -29,7 +29,6 @@ function SemanticToast(props) {
             success={type === 'success'}
             error={type === 'error'}
             warning={type === 'warning'}
-            size="mini"
             icon={typeof icon === 'string'}
         >
             {icon && <Icon name={icon} />}
